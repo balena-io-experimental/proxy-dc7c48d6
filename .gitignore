@@ -1,2 +1,4 @@
 /checker/target/
 /checker/Cargo.lock
+/runner/target/
+/runner/Cargo.lock
