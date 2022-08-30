@@ -8,5 +8,8 @@ edition = "2021"
 [dependencies]
 actix-web = "*"
 actix-http = "*"
-awc = "*"
 serde = { version = "1", features = ["derive"] }
+
+[dependencies.awc]
+version = "*"
+features = ["openssl"]

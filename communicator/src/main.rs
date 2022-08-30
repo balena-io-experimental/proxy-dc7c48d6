@@ -54,13 +54,36 @@ async fn check_ubuntu() -> impl Responder {
     Check::new(status)
 }
 
-/// TODO: http://nmcheck.gnome.org/check_network_status.txt
+#[get("/check/gnome")]
+async fn check_gnome() -> impl Responder {
+    let result = get("https://nmcheck.gnome.org/check_network_status.txt").await;
+
+    let status = match result {
+        Ok(mut response) => match response.body().await {
+            Ok(body) => if body == "NetworkManager is online\n" {
+                "online"
+            } else {
+                println!("{:?}", body);
+                "unknown-body"
+            }
+            .to_owned(),
+            Err(err) => {
+                format!("{}", err)
+            }
+        },
+        Err(err) => {
+            format!("{}", err)
+        }
+    };
+
+    Check::new(status)
+}
 
 /// TODO: http://fedoraproject.org/static/hotspot.txt
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(check_ubuntu))
+    HttpServer::new(|| App::new().service(check_ubuntu).service(check_gnome))
         .bind(("127.0.0.1", 8080))?
         .run()
         .await
