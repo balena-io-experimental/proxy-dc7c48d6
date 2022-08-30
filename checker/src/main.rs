@@ -51,7 +51,7 @@ async fn check_ubuntu() -> impl Responder {
         }
     };
 
-    println!("Ubuntu: {}", status);
+    println!("ubuntu: {}", status);
 
     Check::new(status)
 }
@@ -78,7 +78,7 @@ async fn check_gnome() -> impl Responder {
         }
     };
 
-    println!("Gnome: {}", status);
+    println!("gnome: {}", status);
 
     Check::new(status)
 }
@@ -105,7 +105,7 @@ async fn check_fedora() -> impl Responder {
         }
     };
 
-    println!("Fedora: {}", status);
+    println!("fedora: {}", status);
 
     Check::new(status)
 }
