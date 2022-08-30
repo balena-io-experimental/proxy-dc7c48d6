@@ -9,6 +9,10 @@ actix-server = "*"
 num-traits = "*"
 num-derive = "*"
 
+[dependencies.serde]
+version = "*"
+features = ["derive"]
+
 [dependencies.awc]
 version = "*"
 features = ["openssl"]
