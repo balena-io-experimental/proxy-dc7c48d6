@@ -79,12 +79,40 @@ async fn check_gnome() -> impl Responder {
     Check::new(status)
 }
 
-/// TODO: http://fedoraproject.org/static/hotspot.txt
+#[get("/check/fedora")]
+async fn check_fedora() -> impl Responder {
+    let result = get("https://fedoraproject.org/static/hotspot.txt").await;
+
+    let status = match result {
+        Ok(mut response) => match response.body().await {
+            Ok(body) => if body == "OK" {
+                "online"
+            } else {
+                println!("{:?}", body);
+                "unknown-body"
+            }
+            .to_owned(),
+            Err(err) => {
+                format!("{}", err)
+            }
+        },
+        Err(err) => {
+            format!("{}", err)
+        }
+    };
+
+    Check::new(status)
+}
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(check_ubuntu).service(check_gnome))
-        .bind(("127.0.0.1", 8080))?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .service(check_ubuntu)
+            .service(check_gnome)
+            .service(check_fedora)
+    })
+    .bind(("127.0.0.1", 8080))?
+    .run()
+    .await
 }

@@ -1,0 +1,16 @@
+[package]
+name = "checker"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+actix-web = "*"
+actix-http = "*"
+
+[dependencies.serde]
+version = "*"
+features = ["derive"]
+
+[dependencies.awc]
+version = "*"
+features = ["openssl"]
