@@ -1,0 +1,11 @@
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye-run
+
+RUN apt update
+
+RUN apt install -y ssh curl jq
+
+WORKDIR /usr/bin
+
+COPY balena.sh ./
+
+CMD ["balena.sh"]

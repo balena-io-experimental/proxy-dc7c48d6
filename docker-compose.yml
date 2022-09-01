@@ -7,3 +7,9 @@ services:
     build: ./checker
     expose:
       - "8080"
+  proxy:
+    build: ./proxy
+    network_mode: host
+    restart: always
+    labels:
+      io.balena.features.supervisor-api: '1'
