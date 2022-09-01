@@ -23,6 +23,8 @@ enum Command {
 
 #[actix_rt::main]
 async fn main() -> std::io::Result<()> {
+    println!("starting...");
+
     let mut counter: usize = 0;
 
     let mut interval = time::interval(Duration::from_secs(10));
@@ -37,7 +39,7 @@ async fn main() -> std::io::Result<()> {
 
         println!("request {}", os);
 
-        let url = format!("http://localhost:8080/check/{}", os);
+        let url = format!("http://checker:8080/check/{}", os);
 
         let result = get(&url).await;
 

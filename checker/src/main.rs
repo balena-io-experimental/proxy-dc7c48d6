@@ -112,6 +112,8 @@ async fn check_fedora() -> impl Responder {
 
 #[actix_web::main] // or #[tokio::main]
 async fn main() -> std::io::Result<()> {
+    println!("starting...");
+
     HttpServer::new(|| {
         App::new()
             .service(check_ubuntu)
