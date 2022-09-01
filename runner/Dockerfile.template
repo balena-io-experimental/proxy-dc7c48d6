@@ -1,0 +1,19 @@
+FROM rust:1.63-slim-bullseye as builder
+
+RUN apt update
+
+RUN apt -y install pkg-config libssl-dev
+
+WORKDIR /usr/src/runner
+
+COPY . .
+
+RUN cargo build --release
+
+FROM balenalib/%%BALENA_MACHINE_NAME%%-debian:bullseye-run
+
+WORKDIR /usr/bin
+
+COPY --from=builder /usr/src/runner/target/release/runner .
+
+CMD ["runner"]

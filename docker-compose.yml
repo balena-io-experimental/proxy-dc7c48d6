@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  runner:
+    build: ./runner
+  checker:
+    build: ./checker
+    expose:
+      - "8080"
